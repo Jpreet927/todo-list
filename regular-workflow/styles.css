@@ -6,12 +6,12 @@
   box-sizing: border-box;
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
     Ubuntu;
-  color: #f3f3f3;
 }
 
 body {
   width: 100%;
   height: 100vh;
+  color: #f3f3f3;
 }
 
 header {
@@ -23,6 +23,42 @@ header {
   align-content: center;
 }
 
+header.header-light {
+  background-color: #e9edf4;
+  color: #0c0c0c;
+}
+
+.toggle-mode {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  border-radius: 160px;
+  display: block;
+  background-color: #1a3857;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.toggle-mode .toggle-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 24px;
+  width: 24px;
+  background-color: white;
+  border-radius: 50%;
+  transform: scale(0.8);
+  transition: 0.2s ease;
+}
+
+.toggle-mode.toggle-active {
+  background-color: #a8c6e5;
+}
+
+.toggle-mode.toggle-active .toggle-btn {
+  left: 24px;
+}
+
 .main-body {
   display: flex;
   width: 100%;
@@ -32,7 +68,11 @@ header {
 .left {
   width: 34%;
   background-color: #05090e;
-  padding: 84px;
+  padding: 84px 150px;
+}
+
+.left.left-light {
+  background-color: #f3f5f9;
 }
 
 .left h1 {
@@ -51,11 +91,26 @@ ul {
   color: #394359;
 }
 
+.left.left-light h1,
+.right.right-light h1,
+.right.right-light .task-container .task .task-information .task-title p {
+  color: #0c0c0c;
+}
+
+.left.left-light ul li,
+.right.right-light .task-container .task .task-information .task-details p {
+  color: #aab3c9;
+}
+
 .right {
   width: 66%;
   background-image: url(../images/task-list-bg.png);
   background-size: cover;
   padding: 84px;
+}
+
+.right.right-light {
+  background-image: url(../images/task-list-bg-inv.png);
 }
 
 .right h1 {
@@ -71,7 +126,7 @@ ul {
 
 .task {
   height: 60px;
-  width: 90%;
+  min-width: 90%;
   display: flex;
   transition: transform 0.2s ease;
 }
@@ -97,10 +152,15 @@ ul {
 .task-information {
   background-color: rgba(0, 0, 0, 0.507);
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 24px 12px;
+}
+
+.task-information.task-light {
+  background-color: rgba(255, 255, 255, 0.507);
 }
 
 .task-title {
@@ -140,6 +200,47 @@ ul {
 .task-expand {
   flex: 1 0;
   transition: all 0.2s ease;
+}
+
+.new-task {
+  display: flex;
+  align-items: center;
+  padding: 16px 26px;
+  gap: 24px;
+  background-color: rgba(0, 0, 0, 0.507);
+  position: sticky;
+  position: -webkit-sticky;
+  margin-top: 24px;
+  bottom: 48px;
+  width: 90%;
+  transition: transform 0.2s ease;
+}
+
+.new-task:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.new-task img {
+  max-height: 12px;
+}
+
+.new-project img {
+  max-height: 12px;
+}
+
+.new-project {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 36px;
+  padding-left: 12px;
+  opacity: 0.4;
+}
+
+.new-project:hover {
+  cursor: pointer;
+  opacity: 1;
 }
 
 /* .details-visible {

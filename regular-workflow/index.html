@@ -11,7 +11,9 @@
 <body>
     <header>
         <h3>My To-Do List</h3>
-        <button>dark mode/light mode placeholder</button>
+        <div class="toggle-mode">
+            <i class="toggle-btn"></i>
+        </div>
     </header>
     <div class="main-body">
         <div class="left">
@@ -23,6 +25,10 @@
                 <li>Lorem Ipsum</li>
                 <li>Lorem Ipsum</li>
             </ul>
+            <div class="new-project">
+                <img src="../images/plus.png" alt="">
+                <p>Add a Project</p>
+            </div>
         </div>
         <div class="right">
             <h1>Task List</h1>
@@ -53,7 +59,7 @@
                             </div>
                         </div>
                         <div class="task-details">
-                            <p>Sint proident eiusmod labore exercitation sint eu cillum nostrud adipisicing non. Ipsum tempor ea ut commodo elit fugiat cillum eiusmod excepteur eiusmod velit quis proident do. Eiusmod magna Lorem duis cillum. Tempor dolor occaecat id dolor laborum nulla in culpa officia. </p>
+                            <p>Sint proident eiusmod labore exercitation sint eu cillum nostrud adipisicing non. Ipsum tempor ea ut commodo elit fugiat cillum eiusmod </p>
                         </div>
                     </div>
                 </div>
@@ -73,7 +79,24 @@
                     </div>
                 </div>
             </div>
+            <div class="new-task">
+                <img src="../images/plus.png" alt="">
+                <p>Add a Task</p>
+            </div>
         </div>
+    </div>
+
+    <div class="modal">
+        <form id="task-form" action="">
+            <div class="form-input">
+                <label for="">Task Name</label>
+                <input id="form-task-name" type="text" placeholder="Task Name">
+            </div>
+            <div class="form-input">
+                <label for="">Description</label>
+                <input type="text" name="" id="form-task-input" placeholder="Task Decription">
+            </div>
+        </form>
     </div>
 
 </body>
