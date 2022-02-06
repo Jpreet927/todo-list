@@ -188,6 +188,14 @@ ul {
   opacity: 0.9;
 }
 
+.task-title .task-date {
+  font-size: 12px;
+  opacity: 1;
+  color: #394359;
+  margin-left: auto;
+  margin-right: 24px;
+}
+
 .task-details {
   padding: 0 24px;
   visibility: hidden;
@@ -246,3 +254,85 @@ ul {
 /* .details-visible {
   visibility: visible;
 } */
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  color: #f3f3f3;
+  font-weight: 700;
+  background-image: url(../images/task-list-bg.png);
+  background-size: cover;
+}
+
+#task-form {
+  width: 35%;
+  padding: 48px;
+  background-color: #05090e73;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 12px 0;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+#form-task-description {
+  height: 60px;
+}
+
+input,
+textarea,
+select {
+  /* border: rgb(0, 0, 0); */
+  /* background-color: rgb(241, 241, 241); */
+  padding: 12px;
+  /* border: none; */
+  border: 2px solid #f0f0f0;
+  border-color: #1a385700;
+  background-color: #18212c;
+  color: white;
+  font-family: "Roboto", sans-serif;
+}
+
+::placeholder {
+  color: #394359;
+  opacity: 1; /* Firefox */
+}
+
+textarea {
+  resize: none;
+}
+
+#task-submit {
+  width: 30%;
+  height: 40px;
+  border: none;
+  background-color: #1a3857;
+  color: white;
+  font-weight: 700;
+  margin-top: 12px;
+  transition: transform 0.2s ease;
+}
+
+#task-submit:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.form-input.success input,
+.form-input.success textarea,
+.form-input.success select {
+  border-color: rgb(85, 190, 85);
+}
+
+.form-input.error input,
+.form-input.error textarea,
+.form-input.error select {
+  border-color: rgb(228, 51, 89);
+}

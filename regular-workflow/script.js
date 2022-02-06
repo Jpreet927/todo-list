@@ -33,3 +33,106 @@ function toggleMode(e) {
         task.classList.toggle('task-light');
     })
 }
+
+
+// FORM VALIDATION
+let taskForm = document.getElementById("task-form");
+let taskName = document.getElementById("form-task-name");
+let taskDescription = document.getElementById("form-task-description");
+let projectName = document.getElementById("project-name");
+let dateSelect = document.getElementById("date-select");
+let submitBtn = document.getElementById("task-submit");
+
+taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+        let taskNameInput = taskName.value.trim();
+        let taskDescInput = taskDescription.value.trim();
+        let projectInput = projectName.options[projectName.selectedIndex].value;
+        let taskDateInput = dateSelect.value;
+        createTask(taskNameInput, taskDescInput, projectInput, taskDateInput);
+    };
+})
+
+function validateForm() {
+    let taskNameInput = taskName.value.trim();
+    let taskDescInput = taskDescription.value.trim();
+    
+    if (taskNameInput === '') {
+        if (taskName.parentElement.classList.contains('success')){
+            taskName.parentElement.classList.remove('success');
+        }
+        taskName.parentElement.classList.add('error');
+    } else {
+        if (taskName.parentElement.classList.contains('error')){
+            taskName.parentElement.classList.remove('error');
+        }
+        taskName.parentElement.classList.add('success')
+    }
+
+    if (taskDescInput === '') {
+        if (taskDescription.parentElement.classList.contains('success')){
+            taskDescription.parentElement.classList.remove('success');
+        }
+        taskDescription.parentElement.classList.add('error');
+    } else {
+        if (taskDescription.parentElement.classList.contains('error')){
+            taskDescription.parentElement.classList.remove('error');
+        }
+        taskDescription.parentElement.classList.add('success')
+    }
+
+    if (taskNameInput !== '' && taskDescInput !== '') {
+        return true
+    }
+}
+
+
+// TASK CREATION SECTION
+// create task -> add to list -> generate
+
+const tasks = (() => {
+    let taskList = [];  
+
+    class Task {
+        constructor(name, description, project, date) {
+            this.name = name;
+            this.description = description;
+            this.project = project;
+            this.date = date;
+        }
+    }
+
+    function createTask(name, description, project, date) {
+        let newTask = new Task(name, description, project, date);
+        taskList.push(newTask);
+        // render task in DOM -> gonna have to ref project object to get the colour
+        // implement delete and complete
+    }
+
+    function deleteTask(e) {
+        e.currentTarget.parentElement.parentElement.parentElement.parentElement
+    }
+})
+
+
+// PROJECT CREATION SECTION
+// add project -> add project to form list
+
+const projects = (() => {
+    let projectList = [];
+
+    class Project {
+        constructor(name, colour) {
+            this.name = name;
+            this.colour = colour;
+        }
+    }
+
+    // takes project name from input and colour from function
+    function createProject(name, colour) {
+        let newProject = new Project(name, colour);
+        projectList.push(newProject);
+        // render in sidebar DOM
+    }
+})

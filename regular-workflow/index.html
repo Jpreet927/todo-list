@@ -20,10 +20,8 @@
             <h1>Project List</h1>
             <ul>
                 <li>All Projects</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
+                <li>School</li>
+                <li>Work</li>
             </ul>
             <div class="new-project">
                 <img src="../images/plus.png" alt="">
@@ -38,6 +36,7 @@
                     <div class="task-information">
                         <div class="task-title">
                             <p>Task Name</p>
+                            <p class="task-date">02/06/2022</p>
                             <div class="icons">
                                 <img src="../images/check.png" alt="" id="complete">
                                 <img src="../images/x.png" alt="" id="delete">
@@ -53,6 +52,7 @@
                     <div class="task-information">
                         <div class="task-title">
                             <p>Task Name</p>
+                            <p class="task-date">02/06/2022</p>
                             <div class="icons">
                                 <img src="../images/check.png" alt="" id="complete">
                                 <img src="../images/x.png" alt="" id="delete">
@@ -68,6 +68,7 @@
                     <div class="task-information">
                         <div class="task-title">
                             <p>Task Name</p>
+                            <p class="task-date">02/06/2022</p>
                             <div class="icons">
                                 <img src="../images/check.png" alt="" id="complete">
                                 <img src="../images/x.png" alt="" id="delete">
@@ -88,14 +89,29 @@
 
     <div class="modal">
         <form id="task-form" action="">
+            <h1>New Task</h1>
             <div class="form-input">
                 <label for="">Task Name</label>
                 <input id="form-task-name" type="text" placeholder="Task Name">
             </div>
             <div class="form-input">
                 <label for="">Description</label>
-                <input type="text" name="" id="form-task-input" placeholder="Task Decription">
+                <textarea name="" id="form-task-description" cols="30" rows="10" placeholder="Task Description"></textarea>
             </div>
+            <div class="form-input">
+                <label for="">Project</label>
+                <select name="project-name" id="project-name">
+                    <option value="" selected disabled hidden></option>
+                    <option value="Lorem">None</option>
+                    <option value="Lorem">School</option>
+                    <option value="Lorem">Work</option>
+                </select>
+            </div>
+            <div class="form-input">
+                <label for="">Finish Date</label>
+                <input type="date" id="date-select">
+            </div>
+            <button id="task-submit">Submit</button>
         </form>
     </div>
 
