@@ -220,7 +220,7 @@ ul {
   position: -webkit-sticky;
   margin-top: 24px;
   bottom: 48px;
-  width: 90%;
+  width: 100%;
   transition: transform 0.2s ease;
 }
 
@@ -265,12 +265,32 @@ ul {
   font-weight: 700;
   background-image: url(../images/task-list-bg.png);
   background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
 }
 
 #task-form {
   width: 35%;
   padding: 48px;
   background-color: #05090e73;
+}
+
+.form-header {
+  display: flex;
+}
+
+.form-header img {
+  width: 12px;
+  height: 12px;
+  margin-left: auto;
+  opacity: 0.4;
+}
+
+.form-header img:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .form-input {
@@ -335,4 +355,42 @@ textarea {
 .form-input.error textarea,
 .form-input.error select {
   border-color: rgb(228, 51, 89);
+}
+
+.project-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  color: #f3f3f3;
+  font-weight: 700;
+  background-image: url(../images/task-list-bg.png);
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+}
+
+#project-form {
+  width: 35%;
+  padding: 48px;
+  background-color: #05090e73;
+}
+
+#project-submit {
+  width: 30%;
+  height: 40px;
+  border: none;
+  background-color: #1a3857;
+  color: white;
+  font-weight: 700;
+  margin-top: 12px;
+  transition: transform 0.2s ease;
+}
+
+#project-submit:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }

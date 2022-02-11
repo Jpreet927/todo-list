@@ -34,8 +34,32 @@ function toggleMode(e) {
     })
 }
 
+//PROJECT FORM
+let projectModal = document.querySelector(".project-modal");
+let projectForm = document.getElementById("project-form");
+let projectNameForm = document.getElementById("project-name");
+let projectSubmitBtn = document.getElementById("project-submit");
+let projectFormDelete = document.querySelector(".project-form-close");
+let projectAdd = document.querySelector(".new-project");
 
-// FORM VALIDATION
+projectForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (projectNameForm.value.trim() !== "") {
+        let projectNameInput = projectNameForm.value.trim();
+        let projectColour = generateColour();
+        createProject(projectNameInput, projectColour);
+    }
+})
+
+projectAdd.addEventListener('click', () => {
+    projectModal.style.visibility = 'visible';
+})
+
+projectFormDelete.addEventListener('click', () => {
+    projectModal.style.visibility = 'hidden';
+})
+
+// TASK FORM
 let taskForm = document.getElementById("task-form");
 let taskName = document.getElementById("form-task-name");
 let taskDescription = document.getElementById("form-task-description");
@@ -91,7 +115,19 @@ function validateForm() {
 // TASK CREATION SECTION
 // create task -> add to list -> generate
 
-const tasks = (() => {
+let addTaskBtn = document.querySelector('.new-task');
+let formModal = document.querySelector('.modal');
+addTaskBtn.addEventListener('click', () => {
+    formModal.style.visibility = 'visible';
+})
+
+let formClose = document.querySelector('.form-close');
+formClose.addEventListener('click', () => {
+    formModal.style.visibility = 'hidden';
+})
+
+// task class
+const task = (() => {
     let taskList = [];  
 
     class Task {
@@ -111,7 +147,7 @@ const tasks = (() => {
     }
 
     function deleteTask(e) {
-        e.currentTarget.parentElement.parentElement.parentElement.parentElement
+        // e.currentTarget.parentElement.parentElement.parentElement.parentElement
     }
 })
 
@@ -136,3 +172,4 @@ const projects = (() => {
         // render in sidebar DOM
     }
 })
+

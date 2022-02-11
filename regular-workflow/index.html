@@ -89,7 +89,10 @@
 
     <div class="modal">
         <form id="task-form" action="">
-            <h1>New Task</h1>
+            <div class="form-header">
+                <h1>New Task</h1>
+                <img class="form-close" src="../images/x.png" alt="">
+            </div>
             <div class="form-input">
                 <label for="">Task Name</label>
                 <input id="form-task-name" type="text" placeholder="Task Name">
@@ -112,6 +115,20 @@
                 <input type="date" id="date-select">
             </div>
             <button id="task-submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="project-modal">
+        <form action="" id="project-form">
+            <div class="form-header">
+                <h1>New Project</h1>
+                <img class="project-form-close" src="../images/x.png" alt="">
+            </div>
+            <div class="form-input">
+                <label for="">Project Name</label>
+                <input type="text" id="project-name" placeholder="Project Name">
+            </div>
+            <button id="project-submit">Submit</button>
         </form>
     </div>
 
