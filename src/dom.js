@@ -11,7 +11,7 @@ let projectList = [];
 taskList.push(taskExample1, taskExample2, taskExample3);
 projectList.push(project1, project2);
 
-(function renderPage() {
+function renderPage() {
     let body = document.querySelector("body");
     
     let header = document.querySelector("header");
@@ -57,7 +57,7 @@ projectList.push(project1, project2);
     mainSection.append(left, right);
 
     //add event listeners
-})()
+}
 
 
 function renderTask(task) {
@@ -202,3 +202,5 @@ function renderProjectForm() {
     projectForm.append(formHeader, formName, formSubmitBtn);
     projectModal.append(projectForm);
 }
+
+export { renderPage }
