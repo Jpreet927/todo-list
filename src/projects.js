@@ -4,3 +4,5 @@ class Project {
         this.colour = colour;
     }
 }
+
+export default Project

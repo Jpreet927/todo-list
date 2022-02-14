@@ -137,7 +137,7 @@ ul {
 
 .task-category {
   width: 60px;
-  background-color: rgb(0, 140, 255);
+  /* background-color: rgb(0, 140, 255); */
   display: flex;
   min-height: 100%;
   flex-shrink: 0;

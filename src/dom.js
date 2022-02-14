@@ -1,20 +1,24 @@
 import Task from './tasks'
 import Project from './projects'
+import { generateColour, validateForm } from './helpers'
 
 let taskExample1 = new Task("Task Name", "Lorem Ipsum", "School", "02/06/2022");
 let taskExample2 = new Task("Task Name", "Lorem Ipsum", "School", "02/06/2022");
 let taskExample3 = new Task("Task Name", "Lorem Ipsum", "Work", "02/06/2022");
 let project1 = new Project("School", "rgb(0, 140, 255)");
-let project2 = new Project("School", "rgb(229, 37, 82)");
+let project2 = new Project("Work", "rgb(229, 37, 82)");
 let taskList = [];
 let projectList = [];
+
 taskList.push(taskExample1, taskExample2, taskExample3);
 projectList.push(project1, project2);
 
+// creates main page
 function renderPage() {
+    console.log('hello');
     let body = document.querySelector("body");
-    
-    let header = document.querySelector("header");
+    let header = document.createElement("header");
+    let mainSection = document.createElement("div");
     let pageTitle = document.createElement("h3");
     let toggleContainer = document.createElement("div");
     let toggleIndicator = document.createElement("i");
@@ -24,42 +28,63 @@ function renderPage() {
     toggleIndicator.classList.add("toggle-btn");
     toggleContainer.append(toggleIndicator);
     header.append(pageTitle, toggleContainer);
-
+    mainSection.classList.add("main-body");
+    
     let left = document.createElement("div");
     let leftTitle = document.createElement("h1");
     let newProjectBtn = document.createElement("div");
     let newProjectIcon = document.createElement("img");
     let newProjectText = document.createElement("p");
     let projectUL = document.createElement("ul");
-    
-    let mainSection = document.createElement("div");
-    mainSection.classList.add("main-body");
-
     leftTitle.textContent = "Project List"
     left.classList.add("left");
     projectUL.classList.add("project-list");
     newProjectIcon.src = "../images/plus.png";
     newProjectText.textContent = "Add a Project"
     newProjectBtn.classList.add("new-project");
-    newProjectBtn.append(newProjectIcon, newProjectBtn);
+    newProjectBtn.append(newProjectIcon, newProjectText);
     left.append(leftTitle, projectUL, newProjectBtn);
-
-    //loop through project list and render each, append to ul
 
     let right = document.createElement("div");
     let rightTitle = document.createElement("h1");
     let taskContainer = document.createElement("div");
-
+    let newTask = document.createElement("div");
+    let newTaskIcon = document.createElement("img");
+    let newTaskText = document.createElement("p");
     rightTitle.textContent = "Task List";
     right.classList.add("right");
     taskContainer.classList.add("task-container");
+    newTask.classList.add("new-task");
+    newTaskIcon.src = "../images/plus.png";
+    newTaskText.textContent = "Add a Task";
+    newTask.append(newTaskIcon, newTaskText);
+    right.append(rightTitle, taskContainer, newTask);
 
     mainSection.append(left, right);
+    body.append(header, mainSection);
 
-    //add event listeners
+    toggleContainer.addEventListener('click', toggleMode);
+    newProjectBtn.addEventListener('click', () => {
+        renderProjectForm();
+    })
+    newTask.addEventListener('click', () => {
+        renderTaskForm();
+    })
+    // addtask event listener
+    // add project event listener
 }
 
+function populatePage() {
+    projectList.forEach((project) => {
+        renderProject(project);
+    })
 
+    taskList.forEach((task) => {
+        renderTask(task);
+    })
+}
+
+// function to render single task and append to container
 function renderTask(task) {
     let taskDiv = document.createElement("div");
     let taskCategory = document.createElement("div");
@@ -72,17 +97,26 @@ function renderTask(task) {
     let deleteBtn = document.createElement("img");
     let detailsContainer = document.createElement("div");
     let details = document.createElement("p");
+    let catColour = "";
+
+    projectList.forEach((project) => {
+        if (JSON.stringify(task.project) === JSON.stringify(project.name)) {
+            catColour = project.colour;
+        }
+    })
 
     taskDiv.classList.add("task");
     taskCategory.classList.add("task-category", "cat-grow");
     taskInformationContainer.classList.add("task-information");
     taskHeader.classList.add("task-title");
+    taskDate.classList.add("task-date");
     iconsContainer.classList.add("icons");
     detailsContainer.classList.add("task-details", "details-visible");
     checkBtn.id = "complete";
-    deleteBtn.id = "delete";t
+    deleteBtn.id = "delete";
+    taskCategory.style.backgroundColor = catColour;
     
-    askTitle.textContent = task.name;
+    taskTitle.textContent = task.name;
     taskDate.textContent = task.date;
     details.textContent = task.description;
     checkBtn.src = "../images/check.png";
@@ -91,15 +125,18 @@ function renderTask(task) {
     iconsContainer.append(checkBtn, deleteBtn);
     taskHeader.append(taskTitle, taskDate, iconsContainer);
     detailsContainer.append(details);
-    taskInformationContainer.append(taskCategory, taskHeader, detailsContainer);
-    taskDiv.append(taskInformationContainer);
+    taskInformationContainer.append(taskHeader, detailsContainer);
+    taskDiv.append(taskCategory, taskInformationContainer);
+
+    taskDiv.addEventListener('click', expandTask);
+    deleteBtn.addEventListener('click', deleteTask);
+    checkBtn.addEventListener('click', completeTask);
 
     let taskContainer = document.querySelector(".task-container");
     taskContainer.appendChild(taskDiv);
-
-    // add expand listener, delete listener
 }
 
+// function to render single project and append to container
 function renderProject(projectDiv) {
     let projectUL = document.querySelector(".project-list");
     let projectLI = document.createElement("li");
@@ -109,18 +146,20 @@ function renderProject(projectDiv) {
     projectUL.append(projectLI);
 }
 
+// function to render Task Creation Form
 function renderTaskForm() {
     let projectModal = document.createElement("div");
-    projectModal.classList.add("modal");
     let taskForm = document.createElement("form");
-    taskForm.id = "task-form";
     let formHeader = document.createElement("div");
-    formHeader.classList.add("form-header");
     let formHeaderText = document.createElement("h1");
-    formHeaderText.textContent = "New Task";
     let formHeaderClose = document.createElement("img");
-    formHeaderClose.src = "../images/x.png";
+    
+    projectModal.classList.add("modal");
+    formHeader.classList.add("form-header");
     formHeaderClose.classList.add("form-close");
+    taskForm.id = "task-form";
+    formHeaderText.textContent = "New Task";
+    formHeaderClose.src = "../images/x.png";
     formHeader.append(formHeaderText, formHeaderClose);
 
     let formName = document.createElement("div");
@@ -168,8 +207,23 @@ function renderTaskForm() {
 
     taskForm.append(formHeader, formName, formDesc, formProject, formDate, formSubmitBtn);
     projectModal.append(taskForm);
+
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (validateForm(formNameInput, formDescInput)) {
+            let taskNameInput = formNameInput.value.trim();
+            let taskDescInput = formDescInput.value.trim();
+            let projectInput = formProjectList.options[formProjectList.selectedIndex].value;
+            let taskDateInput = formDateInput.value;
+
+            let newTask = new Task(taskNameInput, taskDescInput, projectInput, taskDateInput);
+            taskList.push(newTask);
+            renderTask(newTask);
+        };
+    })
 }
 
+// function to render Project Creation Form
 function renderProjectForm() {
     let projectModal = document.createElement("div");
     let projectForm = document.createElement("form");
@@ -201,6 +255,51 @@ function renderProjectForm() {
 
     projectForm.append(formHeader, formName, formSubmitBtn);
     projectModal.append(projectForm);
+
+    projectForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let projectNameInput = formNameInput.value.trim();
+        let projectColour = generateColour();
+        
+        let newProject = new Project(projectNameInput, projectColour)
+        projectList.push(newProject);
+        renderProject(newProject);
+    })
 }
 
-export { renderPage }
+function expandTask(e) {
+    // console.log(e.currentTarget);
+    if (e.currentTarget.classList.contains('task-expand')) {
+        e.currentTarget.classList.remove('task-expand');
+        e.currentTarget.querySelector('.task-details').style.visibility = 'hidden';
+    } else {
+        e.currentTarget.classList.add('task-expand');
+        e.currentTarget.querySelector('.task-details').style.visibility = 'visible';
+    }
+}
+
+function deleteTask(e) {
+    console.log(e.currentTarget); //delete button
+}
+
+function completeTask(e) {
+
+}
+
+function toggleMode(e) {
+    let header = document.querySelector('header');
+    let left = document.querySelector('.left');
+    let right = document.querySelector('.right');
+    let tasks = document.querySelectorAll('.task-information');
+
+    e.currentTarget.classList.toggle('toggle-active');
+    header.classList.toggle('header-light');
+    left.classList.toggle('left-light');
+    right.classList.toggle('right-light');
+    tasks.forEach((task) => {
+        task.classList.toggle('task-light');
+    })
+}
+
+
+export { renderPage, populatePage }
