@@ -64,9 +64,11 @@ function renderPage() {
     body.append(header, mainSection);
 
     toggleContainer.addEventListener('click', toggleMode);
+
     newProjectBtn.addEventListener('click', () => {
         renderProjectForm();
     })
+
     newTask.addEventListener('click', () => {
         renderTaskForm();
     })
@@ -148,6 +150,7 @@ function renderProject(projectDiv) {
 
 // function to render Task Creation Form
 function renderTaskForm() {
+    console.log('yerrr');
     let projectModal = document.createElement("div");
     let taskForm = document.createElement("form");
     let formHeader = document.createElement("div");
@@ -187,10 +190,18 @@ function renderTaskForm() {
     let formProjectLabel = document.createElement("label");
     let formProjectList = document.createElement("select");
     formProject.classList.add("form-input");
-    formProjectList.id = "project-name";
+    formProjectList.id = "task-project-name";
     formProjectLabel.textContent = "Project";
 
     //loop throught project list to create options
+    projectList.forEach((project) => {
+        let option = document.createElement("option");
+        option.textContent = project.name;
+        option.value = project.name;
+        formProjectList.append(option);
+    })
+
+    formProject.append(formProjectLabel, formProjectList);
 
     let formDate = document.createElement("div");
     let formDateLabel = document.createElement("label");
@@ -208,6 +219,9 @@ function renderTaskForm() {
     taskForm.append(formHeader, formName, formDesc, formProject, formDate, formSubmitBtn);
     projectModal.append(taskForm);
 
+    let body = document.querySelector("body");
+    body.insertBefore(projectModal, body.firstChild);
+
     taskForm.addEventListener('submit', (e) => {
         e.preventDefault();
         if (validateForm(formNameInput, formDescInput)) {
@@ -219,8 +233,22 @@ function renderTaskForm() {
             let newTask = new Task(taskNameInput, taskDescInput, projectInput, taskDateInput);
             taskList.push(newTask);
             renderTask(newTask);
+
+            deleteTaskForm();
         };
     })
+
+    formHeaderClose.addEventListener('click', deleteTaskForm);
+}
+
+function deleteTaskForm() {
+    let body = document.querySelector("body");
+    body.firstElementChild.remove();
+}
+
+function deleteProjectForm() {
+    let body = document.querySelector("body");
+    body.firstElementChild.remove();
 }
 
 // function to render Project Creation Form
@@ -256,15 +284,25 @@ function renderProjectForm() {
     projectForm.append(formHeader, formName, formSubmitBtn);
     projectModal.append(projectForm);
 
+    let body = document.querySelector("body");
+    body.insertBefore(projectModal, body.firstChild);
+
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
         let projectNameInput = formNameInput.value.trim();
         let projectColour = generateColour();
-        
         let newProject = new Project(projectNameInput, projectColour)
+        let newProjectOption = document.createElement("option");
+
+        newProjectOption.textContent = newProject.name;
+
         projectList.push(newProject);
         renderProject(newProject);
+
+        deleteProjectForm();
     })
+
+    formHeaderClose.addEventListener('click', deleteProjectForm);
 }
 
 function expandTask(e) {
@@ -299,6 +337,14 @@ function toggleMode(e) {
     tasks.forEach((task) => {
         task.classList.toggle('task-light');
     })
+}
+
+function closeTaskForm(e) {
+
+}
+
+function closeProjectForm(e) {
+
 }
 
 
