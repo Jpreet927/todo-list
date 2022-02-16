@@ -268,7 +268,8 @@ ul {
   position: absolute;
   top: 0;
   left: 0;
-  visibility: hidden;
+  /* visibility: hidden; */
+  z-index: 100;
 }
 
 #task-form {
@@ -370,7 +371,8 @@ textarea {
   position: absolute;
   top: 0;
   left: 0;
-  visibility: hidden;
+  z-index: 100;
+  /* visibility: hidden; */
 }
 
 #project-form {
