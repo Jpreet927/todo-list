@@ -2,9 +2,9 @@ import Task from './tasks'
 import Project from './projects'
 import { generateColour, validateForm } from './helpers'
 
-let taskExample1 = new Task("Task Name", "Lorem Ipsum", "School", "02/06/2022");
-let taskExample2 = new Task("Task Name", "Lorem Ipsum", "School", "02/06/2022");
-let taskExample3 = new Task("Task Name", "Lorem Ipsum", "Work", "02/06/2022");
+let taskExample1 = new Task("Task Name", "Lorem Ipsum", "School", "2022-02-06");
+let taskExample2 = new Task("Task Name", "Lorem Ipsum", "School", "2022-02-06");
+let taskExample3 = new Task("Task Name", "Lorem Ipsum", "Work", "2022-02-06");
 let project1 = new Project("School", "rgb(0, 140, 255)");
 let project2 = new Project("Work", "rgb(229, 37, 82)");
 let taskList = [];
@@ -241,15 +241,6 @@ function renderTaskForm() {
     formHeaderClose.addEventListener('click', deleteTaskForm);
 }
 
-function deleteTaskForm() {
-    let body = document.querySelector("body");
-    body.firstElementChild.remove();
-}
-
-function deleteProjectForm() {
-    let body = document.querySelector("body");
-    body.firstElementChild.remove();
-}
 
 // function to render Project Creation Form
 function renderProjectForm() {
@@ -289,17 +280,19 @@ function renderProjectForm() {
 
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        let projectNameInput = formNameInput.value.trim();
-        let projectColour = generateColour();
-        let newProject = new Project(projectNameInput, projectColour)
-        let newProjectOption = document.createElement("option");
+        if (validateForm(formNameInput)) {
+            let projectNameInput = formNameInput.value.trim();
+            let projectColour = generateColour();
+            let newProject = new Project(projectNameInput, projectColour)
+            let newProjectOption = document.createElement("option");
 
-        newProjectOption.textContent = newProject.name;
+            newProjectOption.textContent = newProject.name;
 
-        projectList.push(newProject);
-        renderProject(newProject);
+            projectList.push(newProject);
+            renderProject(newProject);
 
-        deleteProjectForm();
+            deleteProjectForm();
+        }
     })
 
     formHeaderClose.addEventListener('click', deleteProjectForm);
@@ -339,13 +332,14 @@ function toggleMode(e) {
     })
 }
 
-function closeTaskForm(e) {
-
+function deleteTaskForm() {
+    let body = document.querySelector("body");
+    body.firstElementChild.remove();
 }
 
-function closeProjectForm(e) {
-
+function deleteProjectForm() {
+    let body = document.querySelector("body");
+    body.firstElementChild.remove();
 }
-
 
 export { renderPage, populatePage }
