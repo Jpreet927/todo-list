@@ -5,13 +5,14 @@ import { generateColour, validateForm } from './helpers'
 let taskExample1 = new Task("Task Name", "Lorem Ipsum", "School", "2022-02-06");
 let taskExample2 = new Task("Task Name", "Lorem Ipsum", "School", "2022-02-06");
 let taskExample3 = new Task("Task Name", "Lorem Ipsum", "Work", "2022-02-06");
-let project1 = new Project("School", "rgb(0, 140, 255)");
-let project2 = new Project("Work", "rgb(229, 37, 82)");
+let project1 = new Project("All Tasks", "rgb(0, 0, 0)");
+let project2 = new Project("School", "rgb(0, 140, 255)");
+let project3 = new Project("Work", "rgb(229, 37, 82)");
 let taskList = [];
 let projectList = [];
 
 taskList.push(taskExample1, taskExample2, taskExample3);
-projectList.push(project1, project2);
+projectList.push(project1, project2, project3);
 
 // creates main page
 function renderPage() {
@@ -144,8 +145,9 @@ function renderProject(projectDiv) {
     let projectLI = document.createElement("li");
 
     projectLI.textContent = projectDiv.name;
-
     projectUL.append(projectLI);
+
+    projectLI.addEventListener('click', filterTasksByProject);
 }
 
 // function to render Task Creation Form
@@ -310,11 +312,11 @@ function expandTask(e) {
 }
 
 function deleteTask(e) {
-    console.log(e.currentTarget); //delete button
+    this.parentNode.parentNode.parentNode.parentNode.remove(); //delete button
 }
 
 function completeTask(e) {
-
+    this.parentNode.parentNode.parentNode.firstChild.firstChild.classList.toggle('task-complete');
 }
 
 function toggleMode(e) {
@@ -340,6 +342,30 @@ function deleteTaskForm() {
 function deleteProjectForm() {
     let body = document.querySelector("body");
     body.firstElementChild.remove();
+}
+
+function filterTasksByProject(e) {
+    let newTaskList = [];
+    
+    let taskContainer = document.querySelector(".task-container");
+    taskContainer.innerHTML = "";
+
+    if (e.target.textContent == "All Tasks") {
+        taskList.forEach((task) => {
+            renderTask(task);
+        })
+    } else {
+        taskList.forEach((task) => {
+            if (task.project == e.target.textContent) {
+                console.log(task.project);
+                newTaskList.push(task);
+            }
+        })
+    }
+
+    newTaskList.forEach((filteredTask) => {
+        renderTask(filteredTask);
+    })
 }
 
 export { renderPage, populatePage }

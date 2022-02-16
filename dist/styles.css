@@ -91,6 +91,11 @@ ul {
   color: #394359;
 }
 
+.left ul li:hover {
+  color: white;
+  cursor: pointer;
+}
+
 .left.left-light h1,
 .right.right-light h1,
 .right.right-light .task-container .task .task-information .task-title p {
@@ -395,4 +400,9 @@ textarea {
 #project-submit:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+
+.task-title p.task-complete {
+  text-decoration: line-through;
+  opacity: 0.4;
 }
