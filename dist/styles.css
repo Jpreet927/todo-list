@@ -170,15 +170,40 @@ ul {
 
 .task-title {
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
 }
 
+.task-title-details {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .task-title p {
   font-size: 18px;
   font-weight: 700;
+}
+
+#update-task-title-form input {
+  background: none;
+  border: none;
+}
+
+#update-task-title-form input:focus{
+  outline: none;
+}
+
+#update-task-date {
+  text-align: right;
+}
+
+.icons {
+  display: flex;
 }
 
 .task-title img {

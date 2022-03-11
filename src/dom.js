@@ -93,9 +93,14 @@ function renderTask(task) {
     let taskCategory = document.createElement("div");
     let taskInformationContainer = document.createElement("div");
     let taskHeader = document.createElement("div");
+    let taskTitleDetails = document.createElement("div");
     let taskTitle = document.createElement("p");
     let taskDate = document.createElement("p");
     let iconsContainer = document.createElement("div");
+    let editTaskTitleForm = document.createElement("form");
+    let editTaskTitleInput = document.createElement("input");
+    let editTaskDateInput = document.createElement("input");
+    let editBtn = document.createElement("img");
     let checkBtn = document.createElement("img");
     let deleteBtn = document.createElement("img");
     let detailsContainer = document.createElement("div");
@@ -112,9 +117,18 @@ function renderTask(task) {
     taskCategory.classList.add("task-category", "cat-grow");
     taskInformationContainer.classList.add("task-information");
     taskHeader.classList.add("task-title");
+    taskTitleDetails.classList.add("task-title-details");
+    taskTitle.classList.add("task-name");
     taskDate.classList.add("task-date");
     iconsContainer.classList.add("icons");
     detailsContainer.classList.add("task-details", "details-visible");
+    editTaskTitleForm.id = "update-task-title-form";
+    editTaskTitleForm.style.display = "none";
+    editTaskTitleInput.id = "update-task-title";
+    editTaskTitleInput.placeholder = "Enter a new title";
+    editTaskDateInput.id = "update-task-date";
+    editTaskDateInput.placeholder = "Enter a new date";
+    editBtn.id = "edit";
     checkBtn.id = "complete";
     deleteBtn.id = "delete";
     taskCategory.style.backgroundColor = catColour;
@@ -122,11 +136,14 @@ function renderTask(task) {
     taskTitle.textContent = task.name;
     taskDate.textContent = task.date;
     details.textContent = task.description;
+    editBtn.src = "../images/edit2.png";
     checkBtn.src = "../images/check.png";
     deleteBtn.src = "../images/x.png";
     
-    iconsContainer.append(checkBtn, deleteBtn);
-    taskHeader.append(taskTitle, taskDate, iconsContainer);
+    editTaskTitleForm.append(editTaskTitleInput, editTaskDateInput);
+    iconsContainer.append(editBtn, checkBtn, deleteBtn);
+    taskTitleDetails.append(taskTitle, taskDate);
+    taskHeader.append(taskTitleDetails, iconsContainer);
     detailsContainer.append(details);
     taskInformationContainer.append(taskHeader, detailsContainer);
     taskDiv.append(taskCategory, taskInformationContainer);
@@ -134,6 +151,12 @@ function renderTask(task) {
     taskDiv.addEventListener('click', expandTask);
     deleteBtn.addEventListener('click', deleteTask);
     checkBtn.addEventListener('click', completeTask);
+    editBtn.addEventListener('click', () => {
+        taskTitleDetails.style.display = "none";
+        editTaskTitleForm.style.display = "visible";
+    });
+
+    editTaskTitleForm.addEventListener('submit', handleEditSubmit)
 
     let taskContainer = document.querySelector(".task-container");
     taskContainer.appendChild(taskDiv);
@@ -313,10 +336,12 @@ function expandTask(e) {
 
 function deleteTask(e) {
     this.parentNode.parentNode.parentNode.parentNode.remove(); //delete button
+    e.stopPropagation();
 }
 
 function completeTask(e) {
     this.parentNode.parentNode.parentNode.firstChild.firstChild.classList.toggle('task-complete');
+    e.stopPropagation();
 }
 
 function toggleMode(e) {
@@ -342,6 +367,17 @@ function deleteTaskForm() {
 function deleteProjectForm() {
     let body = document.querySelector("body");
     body.firstElementChild.remove();
+}
+
+function handleEditSubmit(e) {
+    e.preventDefault();
+
+    let taskName = document.querySelector(".task-name");
+    let taskDate = document.querySelector(".task-date");
+    let taskNameInput = document.getElementById("update-task-title");
+    let taskDateInput = document.getElementById("update-task-date");
+
+    taskName.textContent = taskNameInput.value;
 }
 
 function filterTasksByProject(e) {
