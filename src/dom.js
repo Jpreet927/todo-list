@@ -165,10 +165,6 @@ function renderTask(task) {
     taskInformationContainer.append(taskHeader, detailsContainer);
     taskDiv.append(taskCategory, taskInformationContainer);
 
-    taskDiv.addEventListener('click', expandTask);
-    deleteBtn.addEventListener('click', deleteTask);
-    checkBtn.addEventListener('click', completeTask);
-
     editBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         taskTitleDetails.style.display = "none";
@@ -190,6 +186,9 @@ function renderTask(task) {
         e.stopPropagation();
     })
 
+    taskDiv.addEventListener('click', expandTask);
+    deleteBtn.addEventListener('click', deleteTask);
+    checkBtn.addEventListener('click', completeTask);
     editTaskTitleForm.addEventListener('submit', handleEditSubmit)
     editDescriptionForm.addEventListener('submit', handleDescSubmit)
 
@@ -375,7 +374,7 @@ function deleteTask(e) {
 }
 
 function completeTask(e) {
-    this.parentNode.parentNode.parentNode.firstChild.firstChild.classList.toggle('task-complete');
+    this.parentNode.parentNode.parentNode.firstChild.children[1].firstChild.classList.toggle('task-complete');
     e.stopPropagation();
 }
 
@@ -436,7 +435,6 @@ function handleDescSubmit(e) {
     taskDetails.textContent = editDetailsInput.value;
     taskDetails.style.display = "block";
     editDetailsForm.style.display = "none";
-
 }
 
 function filterTasksByProject(e) {
