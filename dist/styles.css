@@ -206,14 +206,16 @@ ul {
   display: flex;
 }
 
-.task-title img {
+.task-title img,
+.task-details img {
   max-height: 12px;
   margin-left: 12px;
   opacity: 0.2;
   user-select: none;
 }
 
-.task-title img:hover {
+.task-title img:hover,
+.task-details img:hover {
   cursor: pointer;
   opacity: 0.9;
 }
@@ -227,12 +229,29 @@ ul {
 }
 
 .task-details {
+  display: flex;
+  flex-direction: column;
   padding: 0 24px;
   visibility: hidden;
 }
 
 .task-details p {
   color: #394359;
+}
+
+.task-details img {
+  width: 12px;
+  margin-left: auto;
+  margin-bottom: 12px;
+}
+
+#update-description {
+  width: 100%;
+  background: none;
+}
+
+#update-description:focus {
+  outline: none;
 }
 
 .task-expand {

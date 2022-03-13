@@ -100,9 +100,14 @@ function renderTask(task) {
     let editTaskTitleForm = document.createElement("form");
     let editTaskTitleInput = document.createElement("input");
     let editTaskDateInput = document.createElement("input");
+    let editTaskSubmit = document.createElement("input");
     let editBtn = document.createElement("img");
     let checkBtn = document.createElement("img");
     let deleteBtn = document.createElement("img");
+    let editDescriptionBtn = document.createElement("img");
+    let editDescriptionForm = document.createElement("form");
+    let editDescriptionInput = document.createElement("input");
+    let editDescriptionSubmit = document.createElement("input");
     let detailsContainer = document.createElement("div");
     let details = document.createElement("p");
     let catColour = "";
@@ -112,6 +117,14 @@ function renderTask(task) {
             catColour = project.colour;
         }
     })
+
+    editDescriptionForm.id = "update-description-form";
+    editDescriptionForm.style.display = "none";
+    editDescriptionInput.id = "update-description";
+    editDescriptionInput.placeholder = "Add a new description"
+    editDescriptionSubmit.type = "submit";
+    editDescriptionSubmit.style.display = "none";
+    editDescriptionForm.append(editDescriptionInput, editDescriptionSubmit);
 
     taskDiv.classList.add("task");
     taskCategory.classList.add("task-category", "cat-grow");
@@ -131,32 +144,54 @@ function renderTask(task) {
     editBtn.id = "edit";
     checkBtn.id = "complete";
     deleteBtn.id = "delete";
+    details.classList.add("task-description-text");
     taskCategory.style.backgroundColor = catColour;
     
     taskTitle.textContent = task.name;
     taskDate.textContent = task.date;
     details.textContent = task.description;
+    editTaskSubmit.type = "submit";
+    editTaskSubmit.style.display = "none";
     editBtn.src = "../images/edit2.png";
     checkBtn.src = "../images/check.png";
     deleteBtn.src = "../images/x.png";
+    editDescriptionBtn.src = "../images/edit2.png";
     
-    editTaskTitleForm.append(editTaskTitleInput, editTaskDateInput);
+    editTaskTitleForm.append(editTaskTitleInput, editTaskDateInput, editTaskSubmit);
     iconsContainer.append(editBtn, checkBtn, deleteBtn);
     taskTitleDetails.append(taskTitle, taskDate);
-    taskHeader.append(taskTitleDetails, iconsContainer);
-    detailsContainer.append(details);
+    taskHeader.append(editTaskTitleForm, taskTitleDetails, iconsContainer);
+    detailsContainer.append(editDescriptionBtn, editDescriptionForm, details);
     taskInformationContainer.append(taskHeader, detailsContainer);
     taskDiv.append(taskCategory, taskInformationContainer);
 
     taskDiv.addEventListener('click', expandTask);
     deleteBtn.addEventListener('click', deleteTask);
     checkBtn.addEventListener('click', completeTask);
-    editBtn.addEventListener('click', () => {
+
+    editBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         taskTitleDetails.style.display = "none";
-        editTaskTitleForm.style.display = "visible";
+        editTaskTitleForm.style.display = "flex";
     });
 
+    editDescriptionBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        editDescriptionForm.style.display = "flex";
+        details.style.display = "none";
+    })
+
+    editDescriptionInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+    })
+
+    editDescriptionSubmit.addEventListener('click', (e) => {
+        e.stopPropagation();
+    })
+
     editTaskTitleForm.addEventListener('submit', handleEditSubmit)
+    editDescriptionForm.addEventListener('submit', handleDescSubmit)
 
     let taskContainer = document.querySelector(".task-container");
     taskContainer.appendChild(taskDiv);
@@ -371,13 +406,37 @@ function deleteProjectForm() {
 
 function handleEditSubmit(e) {
     e.preventDefault();
+    console.log("submit working");
 
     let taskName = document.querySelector(".task-name");
     let taskDate = document.querySelector(".task-date");
     let taskNameInput = document.getElementById("update-task-title");
     let taskDateInput = document.getElementById("update-task-date");
+    let taskTitleDetails = document.querySelector(".task-title-details");
+    let editTaskTitleForm = document.getElementById("update-task-title-form");
 
+    
     taskName.textContent = taskNameInput.value;
+    taskDate.textContent = taskDateInput.value;
+    
+    taskTitleDetails.style.display = "flex";
+    editTaskTitleForm.style.display = "none";
+
+}
+
+function handleDescSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("edit desc submit working")
+
+    let taskDetails = document.querySelector(".task-description-text");
+    let editDetailsForm = document.getElementById("update-description-form");
+    let editDetailsInput = document.getElementById("update-description");
+
+    taskDetails.textContent = editDetailsInput.value;
+    taskDetails.style.display = "block";
+    editDetailsForm.style.display = "none";
+
 }
 
 function filterTasksByProject(e) {
